@@ -1,26 +1,51 @@
-# crud-users
+# Blog API
 
-## Tecnologias usadas
-- Express
-- PostgreSQL
-- Sequelize ORM
-- Autenticacion con Tokens
-- Bcrypt para Hasear Contraseñas
-- Uso de Json Web Tokens
-- dotenv para las variables de enorno
+- forntend:
+  - Obtener todas las publicaciónes
+  - Obtener una en especifico 
+  - Obtener todas las categorias 
+  - Obtenertodos los posts de una categoria en especifico
+  - obtener todos los posts que eh creado
+  - Podemos paginar los posts
+  - Acciones de CRUD sobre posts
+  - Crear categorias
 
-# Rutas
-- Rutas de Login y creacion de usuarios (register)
-- Herramienta para publicar imagenes de perfil
-- CRUD de usuarios con autenticacion y manejo de permisos Por ejemplo(cambiar contraseña o modificar o solo eliminar su propio usuario
-- /)
+--json
+  {
+    "total": 68,
+    "prev": "localhost:9000/api/v1/posts?start=51&limit=60"
+    "next" "localhost/9000/api/v1/posts?start=51&limit=60"
+    data: [
+      {
+        "id": "286c10e1-605b-4366-8aa4-b7a76afd3e2b",
+        "title": "titleExample",
+        "content": "lorem",
+        "createBy": {
+          "id": "1234",
+          "name": "Julio",
+          "email" "juliodev@email.com"
+        },
+        "categories": {
+          "id": "ab3f1623-80ca-443c-9d18-c6466aee30a2" 
+          "name" "Technology"
+        }
+      }
+    ]
+  }
 
-# Orden
-1. app.js
-2. env
-3. config.js
-4. database.js
-5. models 
-6. controladores
-7. revicios
-8. rutas
+//Rutas 
+
+/api/v1
+
+/users
+ - /me
+ - /me/post
+ - /me/post/:id
+ - /:id
+
+ /categories
+ - /:id
+ - /:id/posts
+
+ /posts
+ - /:id

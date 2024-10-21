@@ -18,6 +18,7 @@ const db = require("./utils/database")
 */
 const userRouter = require("./users/users.router")
 const authRouter = require("./auth/auth.router")
+const categoriesRouter = require('./categories/categories.router')
 const initModels = require("./models/initModels")
 
 const app = express()
@@ -29,6 +30,7 @@ app.use(express.json());
 // Rutes
 app.use("/api/v1/users", userRouter)
 app.use("/api/v1/auth", authRouter)
+app.use("/api/v1/categories", categoriesRouter)
 
 // Connection to the database
 const initDatabase = async () => {
@@ -37,13 +39,13 @@ const initDatabase = async () => {
     console.log('Connection to the database has been established successfully.');
     await db.sync({ alter: true });
     console.log("DB Synced");
-    await initModels()
   } catch (err) {
     console.error('Unable to connect to the database:', err);
   }
 };
-
 initDatabase()
+
+initModels()
 
 
 

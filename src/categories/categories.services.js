@@ -37,7 +37,7 @@ const postCategory = async (req, res) => {
     return res.status(201).json({ message: "Category registered successfully.", category: newCategory });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "An error occurred while registering the category." });
+    res.status(500).json({ message: "An error occurred while creating the category." });
   }
 };
 

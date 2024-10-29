@@ -46,7 +46,6 @@ const initDatabase = async () => {
   }
 };
 initDatabase()
-
 initModels()
 
 

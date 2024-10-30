@@ -1,7 +1,6 @@
 const uuid = require("uuid")
 const Users = require("../models/users.models")
 const { hashPassword } = require("../utils/crypto")
-const Posts = require("../models/posts.model")
 
 const getAllUsers = async () => {
   const data = await Users.findAll({

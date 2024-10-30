@@ -1,8 +1,19 @@
 const Posts = require("../models/posts.model")
 const uuid = require("uuid")
+const Users = require("../models/users.models")
+const Categories = require("../models/categories.models")
 
 const getAllPosts = async () => {
-  const posts = await Posts.findAll()
+  const posts = await Posts.findAll({
+    include:[
+      {
+        model:Users
+      },
+      {
+        model:Categories
+      }
+    ]
+  })
   return posts
 }
 
@@ -16,11 +27,10 @@ const getPostById = async (id) => {
 }
 
 const createPost = async (data) => {
-  const id = id
   const newPost = await Posts.create({
     id: uuid.v4(),
     title: data.title,
-    condent: data.content,
+    content: data.content,
     createdBy: data.userId,
     categoryId: data.categoryId
   })

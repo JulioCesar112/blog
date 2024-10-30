@@ -23,17 +23,17 @@ const getPostById = async (req, res) => {
 
 const createPost = async (req, res) => {
   const userId = req.user.id
-  const { title, content, createBy, categoryId } = req.body
+  const { title, content, categoryId } = req.body
 
-  if (!title || !content || !createBy || !categoryId) {
+  if (!title || !content || !categoryId) {
     return res.status(400).json({ message: "All fields are required" })
   }
   try {
     const newPost = await postControllers.createPost({ title, content, userId, categoryId })
-    res.status(200).json(newPost)
+    return res.status(200).json(newPost)
   } catch (error) {
     console.log(error)
-    res.status(500).json({ message: "An error occuren while creating the post" })
+    return res.status(500).json({ message: "An error occuren while creating the post" })
   }
 }
 

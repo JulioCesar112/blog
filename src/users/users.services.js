@@ -70,6 +70,10 @@ const registerUser = async (req, res) => {
   }
 
   try {
+    const checkEmailExist = await usersControllers.getUserByEmail(email)
+    if (checkEmailExist) {
+      return res.status(409).json({message:"Email is already registered."})
+    }
     const newUser = await usersControllers.createUser({ firstName, lastName, phone, email, birthday, password });
     return res.status(201).json({ message: "User registered successfully", user: newUser });
   } catch (err) {
@@ -118,7 +122,7 @@ const deleteMyUser = async (req, res) => {
   const id = req.user.id;
 
   try {
-    await usersControllers.deleteUsersById(id, {status:"inactive"});
+    await usersControllers.deleteUsersById(id, { status: "inactive" });
     return res.status(200).json({ message: `your user was deleted successfuly` });
   } catch (error) {
     console.error(error);

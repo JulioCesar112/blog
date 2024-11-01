@@ -11,7 +11,7 @@ const getAllPost = async (req, res) => {
 }
 
 const getPostById = async (req, res) => {
-  const id = req.user.id
+  const id = req.params.id
   try {
     const newPost = await postControllers.getPostById(id)
     res.status(200).json(newPost)
@@ -37,9 +37,21 @@ const createPost = async (req, res) => {
   }
 }
 
+const getPostsByCategory = async (req, res) => {
+  const categoryId = req.params.id
+  try {
+    const postsByCategory = await postControllers.getPostsByCategory(categoryId)
+    return res.status(200).json({postsByCategory})
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({message:'An error occuren while getting the categories'})
+  }
+}
+
 
 module.exports = {
   getAllPost,
   getPostById,
   createPost,
+  getPostsByCategory
 }

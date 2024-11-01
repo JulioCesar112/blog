@@ -5,22 +5,40 @@ const Categories = require("../models/categories.models")
 
 const getAllPosts = async () => {
   const posts = await Posts.findAll({
-    include:[
+    include: [
       {
-        model:Users
+        model: Users,
+        attributes: ['id', 'firstName', 'lastName', 'email']
       },
       {
-        model:Categories
+        model: Categories,
+        attributes: ['name']
       }
-    ]
-  })
-  return posts
-}
+    ],
+    attributes: {
+      exclude: ['createdAt', 'updatedAt', 'categoryId']
+    }
+  });
+  return posts;
+};
 
 const getPostById = async (id) => {
   const post = await Posts.findOne({
     where: {
       id
+    },
+    include: [
+      {
+        model: Users,
+        attributes: ['id', 'firstName', 'lastName', 'email']
+      },
+      {
+        model: Categories,
+        attributes: ['name']
+      }
+    ],
+    attributes: {
+      exclude: ['createdAt', 'updatedAt', 'categoryId']
     }
   })
   return post
@@ -31,7 +49,7 @@ const createPost = async (data) => {
     id: uuid.v4(),
     title: data.title,
     content: data.content,
-    createdBy: data.userId,
+    userId: data.userId,
     categoryId: data.categoryId
   })
   return newPost
@@ -47,9 +65,20 @@ const deletePost = async (id) => {
   return data
 }
 
+const getPostsByCategory = async (categoryId) => {
+  const data = await Posts.findAll({
+    where: {
+      categoryId
+    },
+    attributes: ['id', 'title', 'content']
+  })
+  return data
+}
+
 module.exports = {
   getAllPosts,
   getPostById,
   createPost,
-  deletePost
+  deletePost,
+  getPostsByCategory
 }

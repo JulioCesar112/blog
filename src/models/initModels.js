@@ -3,11 +3,14 @@ const Users = require("./users.models")
 const Categories = require("./categories.models")
 
 const initModels = () => {
-  Posts.belongsTo(Users)
-  Users.hasMany(Posts)
+  // Relación de Posts con Users
+  Posts.belongsTo(Users);
+  Users.hasMany(Posts);
 
-  Posts.belongsTo(Categories)
-  Categories.hasMany(Posts)
-}
+  // Relación de Posts con Categories
+  Posts.belongsTo(Categories);
+  Categories.hasMany(Posts);
+};
+
 
 module.exports = initModels

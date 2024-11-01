@@ -1,11 +1,29 @@
 const uuid = require("uuid")
 const Users = require("../models/users.models")
 const { hashPassword } = require("../utils/crypto")
+const Posts = require("../models/posts.model")
+const Categories = require("../models/categories.models")
 
 const getAllUsers = async () => {
   const data = await Users.findAll({
-    where:{
+    where: {
       status: "active"
+    },
+    include: [
+      {
+        model: Posts,
+        include: [
+          {
+            model: Categories
+          }
+        ],
+        attributes: {
+          exclude: ['createdAt', 'updatedAt','id']
+        }
+      }
+    ],
+    attributes: {
+      exclude: ['createdAt', 'updatedAt','password']
     }
   })
   return data
@@ -16,6 +34,22 @@ const getUserById = async (id) => {
     where: {
       id,
       status: "active"
+    },
+    include: [
+      {
+        model: Posts,
+        include: [
+          {
+            model: Categories
+          }
+        ],
+        attributes: {
+          exclude: ['createdAt', 'updatedAt','id']
+        }
+      }
+    ],
+    attributes: {
+      exclude: ['createdAt', 'updatedAt','password']
     }
   })
   return data

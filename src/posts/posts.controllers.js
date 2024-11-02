@@ -3,8 +3,10 @@ const uuid = require("uuid")
 const Users = require("../models/users.models")
 const Categories = require("../models/categories.models")
 
-const getAllPosts = async () => {
+const getAllPosts = async (offset, limit) => {
   const posts = await Posts.findAll({
+    offset: offset ? offset : 10,
+    limit: limit ? limit : 5,
     include: [
       {
         model: Users,

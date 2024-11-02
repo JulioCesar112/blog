@@ -1,12 +1,21 @@
 const postControllers = require("./posts.controllers")
 
 const getAllPost = async (req, res) => {
+
+  //? localhost:900/api/v1/posts?offset=0&limit=20
+
+  const { offset, limit } = req.query
+
   try {
-    const data = await postControllers.getAllPosts()
-    res.status(200).json(data)
+    const data = await postControllers.getAllPosts(offset, limit)
+    return res.status(200).json({
+      offset,
+      limit,
+      results: data
+    })
   } catch (error) {
     console.log(error)
-    res.status(500).json({ message: "An error occurred while retrieving the post" })
+    return res.status(500).json({ message: "An error occurred while retrieving the post" })
   }
 }
 
@@ -14,10 +23,10 @@ const getPostById = async (req, res) => {
   const id = req.params.id
   try {
     const newPost = await postControllers.getPostById(id)
-    res.status(200).json(newPost)
+    return res.status(200).json(newPost)
   } catch (error) {
     console.log(error)
-    res.status(500).json({ message: "An error occurred while retrieving the post" })
+    return res.status(500).json({ message: "An error occurred while retrieving the post" })
   }
 }
 
@@ -41,10 +50,10 @@ const getPostsByCategory = async (req, res) => {
   const categoryId = req.params.id
   try {
     const postsByCategory = await postControllers.getPostsByCategory(categoryId)
-    return res.status(200).json({postsByCategory})
+    return res.status(200).json({ postsByCategory })
   } catch (error) {
     console.log(error)
-    return res.status(500).json({message:'An error occuren while getting the categories'})
+    return res.status(500).json({ message: 'An error occuren while getting the categories' })
   }
 }
 

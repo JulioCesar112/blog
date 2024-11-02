@@ -1,17 +1,28 @@
 const postControllers = require("./posts.controllers")
+const config = require('../config')
+
 
 const getAllPost = async (req, res) => {
-
   //? localhost:900/api/v1/posts?offset=0&limit=20
 
-  const { offset, limit } = req.query
+  const offset = Number(req.query.offset) || 3
+  const limit = Number(req.query.limit) || 5
+  const urlBase = `${config.host}/api/v1/posts`
+
 
   try {
     const data = await postControllers.getAllPosts(offset, limit)
+    
+    const nextPage = data.count - offset >= limit ? `${urlBase}?offset=${offset + limit}&limit=${limit}` : null
+    const prevPage = offset - limit >= 0 ? `${urlBase}?offset=${offset - limit}&limit=${limit}`: null
+    
     return res.status(200).json({
+      next: nextPage,
+      prev: prevPage,
+      items: data.count,
       offset,
       limit,
-      results: data
+      results: data.rows
     })
   } catch (error) {
     console.log(error)

@@ -48,4 +48,4 @@
  - /:id/posts
 
  /posts
- - /:id
+ - /:id 

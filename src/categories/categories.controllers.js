@@ -1,5 +1,4 @@
 const Categories = require("../models/categories.models")
-const uuid = require("uuid")
 
 const getAllCategories = async () => {
   const data = await Categories.findAll()
